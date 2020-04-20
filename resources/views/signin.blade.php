@@ -19,20 +19,28 @@
             <li><a href="/post">Latest post</a></li>
             <li><a href="/gallery">Gallery</a></li>
             <li><a href="/news">Latest news</a></li>
-            <li><a href="/signin">Sign in</a> / <a href="/signup">Sign up</a></li>
+            @if(! session('remember'))
+                <li><a href="/signin">Sign in</a> / <a href="/signup">Sign up</a></li>
+            @else
+                <li><a href="/user">{{ explode('|', session('remember'))[0]  }}</a> / <a href="/user/signout">Sign out</a></li>
+            @endif
         </ul>
     </div>
     <div id="center">
         <div id="signin">
             <h3 class="text-center mb-3">Authentication</h3>
-            <form>
+            <form method="post" action="/signin/check">
+                @csrf
                 <div class="form-group">
                     <label for="email" class="small m-0 ml-1">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Your email">
+                    <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}" placeholder="Your email">
+                    @if($errors->has('email'))
+                        <small class="text-danger font-weight-bold ml-1">{{$errors->first('email')}}</small>
+                    @endif
                 </div>
                 <div class="form-group mb-4">
                     <label for="password" class="small m-0 ml-1">Password:</label>
-                    <input type="password" class="form-control" id="password" placeholder="Your password">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Your password">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-info btn-block">Sign in</button>

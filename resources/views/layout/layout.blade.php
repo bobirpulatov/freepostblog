@@ -19,7 +19,11 @@
             <li><a href="/post">Latest post</a></li>
             <li><a href="/gallery">Gallery</a></li>
             <li><a href="/news">Latest news</a></li>
-            <li><a href="/signin">Sign in</a> / <a href="/signup">Sign up</a></li>
+            @if(! session('remember'))
+                <li><a href="/signin">Sign in</a> / <a href="/signup">Sign up</a></li>
+            @else
+                <li><a href="/user">{{ explode('|', session('remember'))[0]  }}</a> / <a href="/user/signout">Sign out</a></li>
+            @endif
         </ul>
     </div>
     <div id="center">
