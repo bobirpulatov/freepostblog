@@ -42,11 +42,26 @@
 
             <h3>Latest news</h3>
             <ul>
-                <li><a href="#">1. News 1</a></li>
-                <li><a href="#">1. News 1</a></li>
-                <li><a href="#">1. News 1</a></li>
-                <li><a href="#">1. News 1</a></li>
-                <li><a href="#">1. News 1</a></li>
+              <?php
+              $url = 'https://skift.com/news';
+              $d = \Sunra\PhpSimple\HtmlDomParser::file_get_html($url);
+
+              $d = $d->find('#archive-stories')[0];
+
+              foreach ($d->children as $k => $v){
+
+                if ($k == 5) break;
+              $children = $d->children[$k];
+              $title = $children->find('.story-thumb-container .headline h2 a');
+
+              if ($title == null) continue;
+
+              $title_txt = $title[0]->innertext();
+              $title_link = $title[0]->getAttribute('href');
+              ?>
+                  <li>{{$k+1}}. <a href="/view_post?url=<?= $title_link?>"><?= $title_txt?></a></li>
+            <?php
+          }?>
             </ul>
         </div>
     </div>

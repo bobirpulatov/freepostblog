@@ -19,12 +19,16 @@
           margin-bottom: 15px;
         }
         .latest-container{
-          display: flex;
-          justify-content: space-around;
+          display: block;
           margin-bottom: 10px;
+          position: relative;
+          overflow: hidden;
 
           .each-post{
             width: 22%;
+            padding-left: 2%;
+            float: left;
+            overflow: hidden;
 
             img{
               width: 100%;
@@ -35,7 +39,7 @@
               height: 35px;
               line-height: 35px;
               overflow: hidden;
-              white-space: nowrap;
+              width: 100%;
             }
           }
 

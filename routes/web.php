@@ -24,6 +24,8 @@ Route::get('/gallery/{page}', "HomeController@gallery");
 Route::get('/news', function () { return redirect('/news/1');});
 Route::get('/news/{page}', "HomeController@news");
 
+Route::get('/view_post', "HomeController@view_news");
+
 Route::post('/signin/check', "HomeController@signin_post");
 Route::get('/signin', 'HomeController@signin');
 

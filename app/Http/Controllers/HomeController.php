@@ -36,11 +36,21 @@ class HomeController extends Controller
     }
 
     public function gallery($page){
-      return view('post');
+      if ($page > 20 || $page < 1) $page = 1;
+      return view('gallery', ["page" => $page]);
     }
 
     public function news($page){
-      return view('news');
+      if ($page > 20 || $page < 1) $page = 1;
+      return view('news', ['page' => $page]);
+    }
+
+    public function view_news(Request $request){
+      $url = $request->input('url');
+      if (empty($url))
+        return redirect('/');
+      else
+        return view('view_news', ['url' => $url]);
     }
 
     public function signout(){
