@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/showpost/{id}', 'HomeController@show_post');
 Route::get('/post/', function () { return redirect('/post/1'); });
 Route::get('/post/{page}', "HomeController@post");
 
@@ -33,7 +34,11 @@ Route::get('/signup', 'HomeController@signup');
 Route::post('/register', "HomeController@signup_post");
 
 
-Route::middleware(['signedin'])->prefix('user')->group(function(){
-  Route::get('/', 'UserController@index')->name('umpage');
+Route::middleware([\App\Http\Middleware\isSignedIn::class])->prefix('user')->group(function(){
+  Route::get('/', 'UserController@index');
+  Route::post('/insertpost', 'UserController@insert_post');
+  Route::get('/addpost', 'UserController@add_post');
+  Route::get('/removepost/{id}', 'UserController@remove_post');
   Route::get('/signout', 'HomeController@signout');
+
 });

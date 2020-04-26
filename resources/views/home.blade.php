@@ -9,40 +9,21 @@
     <div class="main-page-post-container">
         <h2><a href="/post">Latest posts</a></h2>
         <div class="latest-container">
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
+      <?php
+      $posts = \App\Custom\Posts::all();
+      if (count($posts) == 0)
+        echo "<p>Posts not added yet</p>";
+      else
+        foreach ($posts as $k => $v) {
+          if ($k > 3) break;
+      ?>
+        <div class="each-post">
+          <img src="{{asset('storage/'.$posts[$k]->img)}}" alt="" style="max-width: 640px; display: block; margin: 0 auto">
+          <a href="{{ '/showpost/'.$posts[$k]->id }}">{{ $posts[$k]->title }}</a>
         </div>
-        <div class="latest-container">
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title  dasname</a>
-            </div>
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
-            <div class="each-post">
-                <img src="https://www.imgonline.com.ua/examples/random-pixels-wallpaper-big.jpg" alt="">
-                <a href="#">Title name</a>
-            </div>
+      <?php
+        }
+      ?>
         </div>
     </div>
 

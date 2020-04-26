@@ -66,7 +66,6 @@ class HomeController extends Controller
 
       $result = $request->validated();
 
-
       $count = User::where('email', '=', $result['email'])->count();
 
       if ($count > 0)
@@ -107,8 +106,11 @@ class HomeController extends Controller
         return redirect('/user/');
 
       }else
-        return redirect('/signup')->withErrors(['email' => 'Email or password is incorrect'])->withInput();
-  }
+        return redirect('/signin')->withErrors(['email' => 'Email or password is incorrect'])->withInput();
+    }
 
+    public function show_post($id){
+      return view('view_post', ['id' => $id]);
+    }
 
 }
