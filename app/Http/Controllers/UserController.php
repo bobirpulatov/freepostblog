@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Custom\Posts;
+use App\Http\Requests\EditPost;
 use App\Http\Requests\Post;
 use Illuminate\Http\Request;
 use App\Custom\User;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    //
   public function index(){
     return view('users.index');
   }
@@ -72,5 +72,43 @@ class UserController extends Controller
 
     return redirect('/user/');
 
+  }
+  
+  public function edit_post($id){
+    return view('users.edit_post', ['post_id' => $id]);
+  }
+  
+  public function edit_post_handler(EditPost $request){
+    $result = $request->validated();
+  
+    $user_email = explode('|', session('remember'))[0];
+    $user_data = User::where('email', '=', $user_email)->first();
+  
+    if ($user_data->id < 1)
+      return redirect('/');
+  
+    $file = $request->file('image');
+  
+    $post = Posts::where([['user_id', $user_data->id], ['id', $result['post_id']] ])->first();
+    
+    if ($post == null) return redirect('/user');
+    
+    if ($file != null){
+      // Filename is hashed filename + part of timestamp
+      $hashedName = hash_file('md5', $file->path());
+  
+      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
+  
+      Storage::disk('public')->put($newFilename, file_get_contents($file));
+  
+      $post->img = $newFilename;
+    }
+    
+    $post->title = $result['title'];
+    $post->description = $request['description'];
+  
+    $post->save();
+  
+    return redirect('/user/');
   }
 }

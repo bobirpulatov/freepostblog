@@ -27,7 +27,7 @@
                 ?>
                     <div class="each-post">
                         <img src="{{ asset('/storage/'.$post->img) }}" alt="">
-                        <a href="#">{{ $post->title }}</a>
+                        <a href="{{"/user/editpost/".$post->id}}">{{ $post->title }}</a>
                         <a href="/user/removepost/{{$post->id}}" class="btn btn-sm btn-danger">Delete</a>
                     </div>
                 <?php

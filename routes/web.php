@@ -38,6 +38,8 @@ Route::middleware([\App\Http\Middleware\isSignedIn::class])->prefix('user')->gro
   Route::get('/', 'UserController@index');
   Route::post('/insertpost', 'UserController@insert_post');
   Route::get('/addpost', 'UserController@add_post');
+  Route::get('/editpost/{id}', 'UserController@edit_post');
+  Route::post('/editPostAction', 'UserController@edit_post_handler');
   Route::get('/removepost/{id}', 'UserController@remove_post');
   Route::get('/signout', 'HomeController@signout');
 
