@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="main-page-post-container">
-        <h2>Welcome, {{ explode('|', session('remember'))[0]  }}</h2>
+        <h2>Welcome, {{ explode('|', session('remember'))[2]  }}</h2>
         <h4 class="ml-3 mt-3 mb-3">Adding post:</h4>
         <form class="m-4" method="post" action="/user/insertpost" enctype="multipart/form-data">
             @csrf

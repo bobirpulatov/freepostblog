@@ -38,6 +38,9 @@ Route::middleware([\App\Http\Middleware\isSignedIn::class])->prefix('user')->gro
   Route::get('/', 'UserController@index');
   Route::post('/insertpost', 'UserController@insert_post');
   Route::get('/addpost', 'UserController@add_post');
+  Route::get('/personal_data', 'UserController@personal_data');
+  Route::post('/personal_data_edit', 'UserController@personal_data_edit');
+  Route::post('/personal_data_password', 'UserController@personal_data_password');
   Route::get('/editpost/{id}', 'UserController@edit_post');
   Route::post('/editPostAction', 'UserController@edit_post_handler');
   Route::get('/removepost/{id}', 'UserController@remove_post');

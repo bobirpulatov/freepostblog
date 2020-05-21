@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Custom\Posts;
 use App\Http\Requests\EditPost;
+use App\Http\Requests\PasswordEdit;
+use App\Http\Requests\PersonalDataEdit;
 use App\Http\Requests\Post;
 use Illuminate\Http\Request;
 use App\Custom\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -110,5 +113,51 @@ class UserController extends Controller
     $post->save();
   
     return redirect('/user/');
+  }
+  
+  public function personal_data(){
+    return view('users.personal_data');
+  }
+  
+  public function personal_data_edit(PersonalDataEdit $request)
+  {
+    try{
+      $user_data = $request->validated();
+  
+      $data = explode('|', session('remember'));
+      $result_db = User::where('remember_token', $data[1])->first();
+  
+      if ($result_db){
+        $result_db->name = $user_data['name'];
+        $result_db->email = $user_data['email'];
+    
+        $result_db->save();
+    
+        session(['remember' => $result_db->email."|".$result_db->remember_token."|".$result_db->name]);
+    
+        return back();
+    
+      } else
+        return redirect('/');
+    }catch (\Exception $e){ return redirect('/'); }
+  }
+  
+  public function personal_data_password(PasswordEdit $request)
+  {
+    try{
+      $user_data = $request->validated();
+    
+      $data = explode('|', session('remember'));
+      $result_db = User::where('remember_token', $data[1])->first();
+    
+      if ($result_db){
+        $result_db->password = Hash::make($user_data['password']);
+        $result_db->save();
+        
+        return back();
+      
+      } else
+        return redirect('/');
+    }catch (\Exception $e){ return redirect('/'); }
   }
 }

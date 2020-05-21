@@ -7,8 +7,9 @@
 
 @section('content')
     <div class="main-page-post-container">
-        <h2>Welcome, {{ explode('|', session('remember'))[0]  }}</h2>
+        <h2>Welcome, {{ explode('|', session('remember'))[2]  }}</h2>
         <a href="/user/addpost" class="btn btn-primary ml-5 mb-3">Add new post</a>
+        <a href="/user/personal_data" class="btn btn-primary ml-5 mb-3">Edit personal data</a>
         <h1 class="ml-3 mt-3 mb-3">Your posts</h1>
         <div class="latest-container">
 

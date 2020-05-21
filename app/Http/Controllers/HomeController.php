@@ -81,7 +81,7 @@ class HomeController extends Controller
       $user->updated_at = date("Y-m-d H:i:s");
       $user->remember_token = Hash::make(time() . " 11 ". rand(0, 500));
 
-      session(['remember' => $user->email."|".$user->remember_token]);
+      session(['remember' => $user->email."|".$user->remember_token."|".$user->name]);
 
       $user->save();
 
@@ -96,13 +96,13 @@ class HomeController extends Controller
 
       $result = $request->validated();
 
-      $user_data = User::where('email', '=', $result['email'])->first();
+      $user_data = User::where('email', $result['email'])->first();
 
       if ($user_data && Hash::check($result['password'], $user_data->password)){
         $user_data->remember_token = Hash::make(time() . " 11 ". rand(0, 500));
         $user_data->save();
 
-        session(['remember' => $user_data->email."|".$user_data->remember_token]);
+        session(['remember' => $user_data->email."|".$user_data->remember_token."|".$user_data->name]);
         return redirect('/user/');
 
       }else
