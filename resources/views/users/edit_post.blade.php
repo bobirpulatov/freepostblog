@@ -34,7 +34,7 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
                   rows="10">{{ $post_data->description }}</textarea>
       </div>
       <div class="form-group col-md-6">
-        <button class="btn btn-block btn-primary">Add post</button>
+        <button class="btn btn-block btn-primary">Edit post</button>
       </div>
 
       @if ($errors->any())
