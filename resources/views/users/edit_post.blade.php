@@ -25,8 +25,24 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
         <input type="hidden" name="post_id" value="{{ $post_id }}">
       </div>
       <div class="form-group col-md-6">
-        <label for="image">Image:</label>
-        <input type="file" class="form-control" id="image" name="image" />
+        <label for="image_1">Image # 1:</label>
+        <input type="file" class="form-control" id="image_1" name="image_1" value="{{ old('image_1') }}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="image_2">Image # 2:</label>
+        <input type="file" class="form-control" id="image_2" name="image_2" value="{{ old('image_1') }}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="image_3">Image # 3:</label>
+        <input type="file" class="form-control" id="image_3" name="image_3" value="{{ old('image_1') }}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="image_4">Image # 4:</label>
+        <input type="file" class="form-control" id="image_4" name="image_4" value="{{ old('image_1') }}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="video">Video:</label>
+        <input type="file" class="form-control" id="video" name="video" value="{{ old('video') }}">
       </div>
       <div class="form-group col-md-6">
         <label for="description">Description:</label>

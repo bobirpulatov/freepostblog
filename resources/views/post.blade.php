@@ -18,7 +18,7 @@
             if ($k > 3) break;
             ?>
             <div class="each-post">
-                <img src="{{asset('storage/'.$posts[$k]->img)}}" alt="" style="max-width: 640px; display: block; margin: 0 auto">
+                <img src="{{asset('storage/'.$posts[$k]->img_1)}}" alt="" style="max-width: 640px; display: block; margin: 0 auto">
                 <a href="{{ '/showpost/'.$posts[$k]->id }}">{{ $posts[$k]->title }}</a>
             </div>
             <?php
