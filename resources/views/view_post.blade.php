@@ -16,42 +16,7 @@ $data = \App\Custom\Posts::where('id', $id)->first();
   <div class="main-page-post-container">
     <h2 class="text-white">{{$data->title}}</h2>
     <div class="">
-      <div id="carouselExampleControls" class="carousel slide" data-wrap="false" data-ride="carousel">
-        <div class="carousel-inner" style="background: #888;">
-          <div class="carousel-item active">
-            <div data-toggle="modal" data-target="#m_image_1"
-                 style="width: 100%; background: url('{{asset('storage/'.$data->img_1)}}') no-repeat 50% 50%; display: block; height: 400px; background-size: contain"></div>
-          </div>
-          @if($data->img_2 != null)
-            <div class="carousel-item">
-              <div data-toggle="modal" data-target="#m_image_2"
-                   style="width: 100%; background: url('{{asset('storage/'.$data->img_2)}}') no-repeat 50% 50%; display: block; height: 400px; background-size: contain"></div>
-            </div>
-          @endif
-          @if($data->img_3 != null)
-            <div class="carousel-item">
-              <div data-toggle="modal" data-target="#m_image_3"
-                   style="width: 100%; background: url('{{asset('storage/'.$data->img_3)}}') no-repeat 50% 50%; display: block; height: 400px; background-size: contain"></div>
-            </div>
-          @endif
-          @if($data->img_4 != null)
-            <div class="carousel-item">
-              <div data-toggle="modal" data-target="#m_image_4"
-                   style="width: 100%; background: url('{{asset('storage/'.$data->img_4)}}') no-repeat 50% 50%; display: block; height: 400px; background-size: contain"></div>
-            </div>
-          @endif
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
       <div class="ml-5 mt-4 pl-3">
-        <h5><b>Description:</b></h5>
         <?php
         $d = explode("\n", $data->description);
         foreach ($d as $item) {

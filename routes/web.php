@@ -37,6 +37,7 @@ Route::post('/register', "HomeController@signup_post");
 Route::middleware([\App\Http\Middleware\isSignedIn::class])->prefix('user')->group(function(){
   Route::get('/', 'UserController@index');
   Route::post('/insertpost', 'UserController@insert_post');
+  Route::post('/uploadFile', 'UserController@upload_image')->name('uploadImage');
   Route::get('/addpost', 'UserController@add_post');
   Route::get('/personal_data', 'UserController@personal_data');
   Route::post('/personal_data_edit', 'UserController@personal_data_edit');

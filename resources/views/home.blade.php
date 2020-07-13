@@ -37,19 +37,21 @@
 
       foreach ($d->children as $k => $v){
         if ($k >= 8) break;
-      $children = $d->children[$k];
-      $img = $children->find('.story-thumb-container img');
-      $title = $children->find('.story-thumb-container .headline h2 a');
+        $children = $d->children[$k];
+        $img = $children->find('.story-thumb-container img');
+        $title = $children->find('.story-thumb-container .headline h2 a');
 
-      if ($title == null) continue;
+        if ($title == null) continue;
 
-      $title_txt = $title[0]->innertext();
-      $title_link = $title[0]->getAttribute('href');
-      $img = $img[0]->getAttribute('src');
+        $title_txt = $title[0]->innertext();
+        $title_link = $title[0]->getAttribute('href');
+        $img_sr = ($img) ? $img[0]->getAttribute('src') : "";
+        $img = $children->find('.story-thumb-container img');
+
       if ($k == 0) echo '<div class="latest-container">';
       ?>
         <div class="each-post">
-            <img class="" src="<?= $img?>" alt="">
+            <img class="" src="<?= $img_sr?>" alt="">
             <a href="/view_post?url=<?= $title_link?>"><?= $title_txt?></a>
         </div>
       <?php

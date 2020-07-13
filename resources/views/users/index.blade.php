@@ -27,9 +27,8 @@
                     foreach ($posts as $post) {
                 ?>
                     <div class="each-post">
-                        <img src="{{ asset('/storage/'.$post->img_1) }}" alt="">
                         <a href="{{"/user/editpost/".$post->id}}">{{ $post->title }}</a>
-                        <a href="/user/removepost/{{$post->id}}" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="/user/removepost/{{$post->id}}" style="line-height: normal" class="btn btn-block btn-danger">Delete</a>
                     </div>
                 <?php
                     }

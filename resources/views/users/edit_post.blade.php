@@ -11,6 +11,7 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
 @section('title', 'Add post')
 @section('headleft')
   <link rel="stylesheet" href="/css/main-page.css" type="text/css"/>
+  <script src="https://cdn.tiny.cloud/1/tto23iagtgjpze9oze3ex90ltpael9ftnmot3ckorjtdoimq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 @endSection
 
 @section('content')
@@ -24,30 +25,8 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
         <input type="text" class="form-control" id="title" name="title" value="{{ $post_data->title }}">
         <input type="hidden" name="post_id" value="{{ $post_id }}">
       </div>
-      <div class="form-group col-md-6">
-        <label for="image_1">Image # 1:</label>
-        <input type="file" class="form-control" id="image_1" name="image_1" value="{{ old('image_1') }}">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="image_2">Image # 2:</label>
-        <input type="file" class="form-control" id="image_2" name="image_2" value="{{ old('image_1') }}">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="image_3">Image # 3:</label>
-        <input type="file" class="form-control" id="image_3" name="image_3" value="{{ old('image_1') }}">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="image_4">Image # 4:</label>
-        <input type="file" class="form-control" id="image_4" name="image_4" value="{{ old('image_1') }}">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="video">Video:</label>
-        <input type="file" class="form-control" id="video" name="video" value="{{ old('video') }}">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="description">Description:</label>
-        <textarea class="form-control" name="description" id="description" cols="30"
-                  rows="10">{{ $post_data->description }}</textarea>
+      <div class="form-group col-md-12">
+        <textarea name="description" id="description">{{ $post_data->description }}</textarea>
       </div>
       <div class="form-group col-md-6">
         <button class="btn btn-block btn-primary">Edit post</button>
@@ -64,5 +43,40 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
       @endif
     </form>
   </div>
+  <script>
+    tinymce.init({
+      menubar: "",
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | image |',
+      selector: 'textarea#description',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      toolbar_mode: 'floating',
+      height: 600,
+      images_upload_handler: function (blobInfo, success, failure) {
+        var xhr, formData;
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', '{{ route('uploadImage') }}');
+        var token = '{{ csrf_token() }}';
+        xhr.setRequestHeader("X-CSRF-Token", token);
+        xhr.onload = function() {
+          var json;
+          if (xhr.status != 200) {
+            failure('HTTP Error: ' + xhr.status);
+            return;
+          }
+          json = JSON.parse(xhr.responseText);
 
+          if (!json || typeof json.location != 'string') {
+            failure('Invalid JSON: ' + xhr.responseText);
+            return;
+          }
+          success(json.location);
+        };
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+        xhr.send(formData);
+      }
+    });
+  </script>
 @endSection

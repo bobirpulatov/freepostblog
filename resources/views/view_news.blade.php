@@ -3,7 +3,8 @@
 $d = \Sunra\PhpSimple\HtmlDomParser::file_get_html($url);
 $title = html_entity_decode($d->find('.article-title')[0]->innertext());
 $text = $d->find('.post-copy p');
-$img = $d->find('.article-photo img')[0]->getAttribute('src');
+$img = $d->find('.article-photo img');
+$img = ($img) ? $img[0]->getAttribute('src') : "";
 
 ?>
 

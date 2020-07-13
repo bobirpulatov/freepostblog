@@ -22,7 +22,19 @@ class UserController extends Controller
   public function add_post(){
     return view('users.add_post');
   }
-
+  
+  public function upload_image(Request $request)
+  {
+    if ($request->hasFile('file')){
+      $file = $request->file('file');
+      $hashedName = hash_file('md5', $file->path());
+      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
+      Storage::disk('public')->put($newFilename, file_get_contents($file));
+      return ["location" => "http://freepostblog.loc:8888".Storage::url($newFilename)];
+    }
+    return ["location" => ""];
+  }
+  
   public function insert_post(Post $request){
     $result = $request->validated();
 
@@ -33,54 +45,9 @@ class UserController extends Controller
       return redirect('/');
   
     $post = new Posts();
-    
-    // Img 1
-    if ($request->hasFile('image_1')){
-      $file = $request->file('image_1');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_1 = $newFilename;
-    }
-  
-    // Img 2
-    if ($request->hasFile('image_2')){
-      $file = $request->file('image_2');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_2 = $newFilename;
-    }
-  
-    // Img 3
-    if ($request->hasFile('image_3')){
-      $file = $request->file('image_3');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_3 = $newFilename;
-    }
-  
-    // Img 4
-    if ($request->hasFile('image_4')){
-      $file = $request->file('image_4');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_4 = $newFilename;
-    }
-    
-    if ($request->hasFile('video')){
-      $vid = $request->file('video');
-      // Filename is hashed filename + part of timestamp
-      $hashedName = hash_file('md5', $vid->path());
-      $newFilename = "videos/".$hashedName . rand(1, 500) . '.' . $vid->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($vid));
-      $post->video = $newFilename;
-    }
-    
     $post->user_id = $user_data->id;
     $post->title = $result['title'];
+    $post->img_1 = "";
     $post->description = $request['description'];
     $post->save();
 
@@ -100,13 +67,6 @@ class UserController extends Controller
     ])->first();
 
     if (!$data) return redirect('/');
-    
-    if ($data->img_1) Storage::disk('public')->delete($data->img_1);
-    if ($data->img_2) Storage::disk('public')->delete($data->img_2);
-    if ($data->img_3) Storage::disk('public')->delete($data->img_3);
-    if ($data->img_4) Storage::disk('public')->delete($data->img_4);
-    
-    if ($data->video) Storage::disk('public')->delete($data->video);
     
     DB::table('posts')->delete($data->id);
 
@@ -129,56 +89,9 @@ class UserController extends Controller
     
     $post = Posts::where([['user_id', $user_data->id], ['id', $result['post_id']] ])->first();
     if ($post == null) return redirect('/user');
-  
-    // Img 1
-    if ($request->hasFile('image_1')){
-      $file = $request->hasFile('image_1');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_1 = $newFilename;
-    }
-  
-    // Img 2
-    if ($request->hasFile('image_2')){
-      $file = $request->hasFile('image_2');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_2 = $newFilename;
-    }
-  
-    // Img 3
-    if ($request->hasFile('image_3')){
-      $file = $request->hasFile('image_3');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_3 = $newFilename;
-    }
-  
-    // Img 4
-    if ($request->hasFile('image_4')){
-      $file = $request->hasFile('image_4');
-      $hashedName = hash_file('md5', $file->path());
-      $newFilename = "images/".$hashedName . rand(1, 500) . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($file));
-      $post->img_4 = $newFilename;
-    }
-  
-    // video
-    if ($request->hasFile('video')){
-      $vid = $request->file('video');
-      // Filename is hashed filename + part of timestamp
-      $hashedName = hash_file('md5', $vid->path());
-      $newFilename = "videos/".$hashedName . rand(1, 500) . '.' . $vid->getClientOriginalExtension();
-      Storage::disk('public')->put($newFilename, file_get_contents($vid));
-      $post->video = $newFilename;
-    }
     
     $post->title = $result['title'];
     $post->description = $request['description'];
-  
     $post->save();
   
     return redirect('/user/');
