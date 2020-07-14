@@ -52,6 +52,24 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
       toolbar_mode: 'floating',
       height: 600,
+      style_formats: [
+        {
+          title: 'Image Left',
+          selector: 'img',
+          styles: {
+            'float': 'left',
+            'margin': '0 10px 0 10px'
+          }
+        },
+        {
+          title: 'Image Right',
+          selector: 'img',
+          styles: {
+            'float': 'right',
+            'margin': '0 0 10px 10px'
+          }
+        }
+      ],
       images_upload_handler: function (blobInfo, success, failure) {
         var xhr, formData;
         xhr = new XMLHttpRequest();

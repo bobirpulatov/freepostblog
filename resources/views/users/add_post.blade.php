@@ -44,6 +44,24 @@
             plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             toolbar_mode: 'floating',
             height: 600,
+            style_formats: [
+                {
+                    title: 'Image Left',
+                    selector: 'img',
+                    styles: {
+                        'float': 'left',
+                        'margin': '0 10px 0 10px'
+                    }
+                },
+                {
+                    title: 'Image Right',
+                    selector: 'img',
+                    styles: {
+                        'float': 'right',
+                        'margin': '0 0 10px 10px'
+                    }
+                }
+            ],
             relative_urls : false,
             remove_script_host : false,
             convert_urls : true,
