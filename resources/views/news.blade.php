@@ -23,7 +23,7 @@
 
             $title_txt = $title[0]->innertext();
             $title_link = $title[0]->getAttribute('href');
-            $img = $img[0]->getAttribute('src');
+            $img = ($img) ? $img[0]->getAttribute('src') : "";
             ?>
               <div class="each-post">
                   <img src="<?= $img?>" alt="">
