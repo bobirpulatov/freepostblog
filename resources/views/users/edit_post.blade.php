@@ -20,7 +20,7 @@ $post_data = \App\Custom\Posts::where([ ['user_id', $user_data->id], ['id', $pos
     <h4 class="ml-3 mt-3 mb-3">Editing post:</h4>
     <form class="m-4" method="post" action="/user/editPostAction" enctype="multipart/form-data">
       @csrf
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-12">
         <label for="title">Title:</label>
         <input type="text" class="form-control" id="title" name="title" value="{{ $post_data->title }}">
         <input type="hidden" name="post_id" value="{{ $post_id }}">

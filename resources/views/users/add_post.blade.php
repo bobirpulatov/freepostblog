@@ -12,7 +12,7 @@
         <h4 class="ml-3 mt-3 mb-3">Adding post:</h4>
         <form class="m-4" method="post" action="/user/insertpost" enctype="multipart/form-data">
             @csrf
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="title">Title:</label>
                 <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
             </div>
